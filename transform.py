@@ -12,7 +12,7 @@ def transform_dataset(house_prices):
 	# Basement variables
 	x['BsmtQualBinary'] = (x['BsmtQual'] == 'Ex') | (x['BsmtQual'] == 'Gd')
 	x['BsmtExposureBinary'] = (x['BsmtExposure'] == 'Gd') | (x['BsmtExposure'] == 'Av') | (x['BsmtExposure'] == 'Mn')
-	x.drop(columns=['BsmtQual', 'BsmtCond', 'BsmtExposure'], inplace=True)
+	x.drop(columns=['BsmtQual', 'BsmtExposure'], inplace=True)
 
 	# Fireplace variables
 	x['FireplaceQualBinary'] = (x['FireplaceQu'] == 'Ex') | (x['FireplaceQu'] == 'Gd') | (x['FireplaceQu'] == 'TA')
@@ -21,7 +21,7 @@ def transform_dataset(house_prices):
 	# Garage variables
 	x['GarageTypeBinary'] = (x['GarageType'] == 'Attchd') | (x['GarageType'] == 'BuiltIn')
 	x['GarageFinishBinary'] = (x['GarageFinish'] == 'Fin') | (x['GarageFinish'] == 'RFn')
-	x.drop(columns=['GarageType', 'GarageFinish', 'GarageQual', 'GarageCond'], inplace=True)
+	x.drop(columns=['GarageType', 'GarageFinish'], inplace=True)
 
 	# Electrical variables
 	x['ElectricalSBrkr'] = x['Electrical'] == 'SBrkr'
@@ -106,6 +106,21 @@ def transform_dataset(house_prices):
 	x['Exterior1stBinary2'] = (x['Exterior1st'] == 'ImStucc') | (x['Exterior1st'] == 'Stone') | (x['Exterior1st'] == 'VinylSd')
 	x.drop(columns=['Exterior1st'], inplace=True)
 
+	# Lot variables
+	x['LotShapeBinary'] = x['LotShape'] == 'Reg'
+	x['LotConfigBinary'] = x['LotConfig'] == 'CulDSac'
+	x.drop(columns=['LotShape', 'LotConfig'], inplace=True)
+
+	# Basement variable
+	x['BsmtFinType1Binary'] = x['BsmtFinType1'] == 'GLQ'
+	x.drop(columns=['BsmtFinType1'], inplace=True)
+
+	# Heating/Central Air variables
+	x['HeatingQCBinary'] = x['HeatingQC'] == 'Ex'
+	x['CentralAirBinary'] = x['CentralAir'] == 'N'
+	x.drop(columns=['HeatingQC', 'CentralAir'], inplace=True)
+	x.drop(columns=['BsmtFullBath', 'BsmtHalfBath'], inplace=True)
+
 	# Drop some variables
 	x.drop(columns=['Street', 'Condition2', 'Condition1', 'RoofMatl', 'Heating', 'LandSlope', 'LandContour', 'BldgType',
 					'Functional', 'Exterior2nd', 'MiscVal', 'Utilities', 'Id'], inplace=True)
@@ -129,11 +144,11 @@ def transform_dataset(house_prices):
 	x['GarageArea'] = trans
 
 	# Drop some continuous variables
-	x.drop(columns=['EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'PoolArea'])
+	x.drop(columns=['EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'PoolArea'], inplace=True)
 
 	# Continuous countable variables
 	x['GarageCarsBinary'] = x['GarageCars'].apply(lambda x: int(x) > 1)
-	x['FireplacesBinary'] = x['Fireplaces'].aaply(lambda x: int(x) > 0)
+	x['FireplacesBinary'] = x['Fireplaces'].apply(lambda x: int(x) > 0)
 	x['TotRmsAbvGrdBinary1'] = x['TotRmsAbvGrd'].apply(lambda x: int(x) > 5 and int(x) <= 7)
 	x['TotRmsAbvGrdBinary2'] = x['TotRmsAbvGrd'].apply(lambda x: int(x) > 7)
 	x['KitchenAbvGrBinary'] = x['KitchenAbvGr'].apply(lambda x: int(x) == 1)
@@ -147,7 +162,7 @@ def transform_dataset(house_prices):
 	x['NewHouse'] = x['YearBuilt'] > 1990
 	x['OldHouse'] = x['YearBuilt'] < 1980
 
-	x.drop(columns=['YearRemodAdd', 'MoSold', 'YrSold'])
+	x.drop(columns=['YearRemodAdd', 'MoSold', 'YrSold'], inplace=True)
 
 	return x, y
 
