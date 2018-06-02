@@ -123,7 +123,7 @@ def transform_dataset(house_prices):
 
 	# Drop some variables
 	x.drop(columns=['Street', 'Condition2', 'Condition1', 'RoofMatl', 'Heating', 'LandSlope', 'LandContour', 'BldgType',
-					'Functional', 'Exterior2nd', 'MiscVal', 'Utilities', 'Id'], inplace=True)
+					'Functional', 'Exterior2nd', 'MiscVal', 'Utilities'], inplace=True)
 
 	# Lot size variable
 	x['LotArea'] = np.log(x['LotArea'])
