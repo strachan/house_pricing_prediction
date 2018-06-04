@@ -26,8 +26,17 @@ def transform_dataset(house_prices):
 		k, p = stats.normaltest(x[column])
 		if p < 0.05:
 			x[column] = np.log(x[column] + 1)
+		x[column + 'Square'] = x[column]**2
+		x[column + 'Cubic'] = x[column]**3
 
 	x = pd.get_dummies(x, drop_first=True)
+
+	x['LotGrBsmtArea'] = x['GrLivArea'] * x['LotArea'] * x['TotalBsmtSF']
+	x['Q406'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2006))
+	x['Q407'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2007))
+	x['Q408'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2008))
+	x['Q409'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2009))
+	x['Q410'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2010))
 
 	return x, y
 
@@ -54,6 +63,15 @@ def transform_dataset_test(house_prices):
 		k, p = stats.normaltest(x[column])
 		if p < 0.05:
 			x[column] = np.log(x[column] + 1)
+		x[column + 'Square'] = x[column]**2
+		x[column + 'Cubic'] = x[column]**3
+
+	x['LotGrBsmtArea'] = x['GrLivArea'] * x['LotArea'] * x['TotalBsmtSF']
+	x['Q406'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2006))
+	x['Q407'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2007))
+	x['Q408'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2008))
+	x['Q409'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2009))
+	x['Q410'] = ((x['MoSold'] == 10) | (x['MoSold'] == 11) | (x['MoSold'] == 12) & (x['YrSold'] == 2010))
 
 	x = pd.get_dummies(x, drop_first=True)
 
