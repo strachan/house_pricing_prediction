@@ -24,7 +24,8 @@ def transform_dataset(house_prices):
 
 	for column in continuous_columns:
 		k, p = stats.normaltest(x[column])
-		if p < 0.05:
+		skewness = stats.skew(x[column])
+		if p < 0.05 and skewness > .70:
 			x[column] = np.log(x[column] + 1)
 		x[column + 'Square'] = x[column]**2
 		x[column + 'Cubic'] = x[column]**3
@@ -61,7 +62,8 @@ def transform_dataset_test(house_prices):
 
 	for column in continuous_columns:
 		k, p = stats.normaltest(x[column])
-		if p < 0.05:
+		skewness = stats.skew(x[column])
+		if p < 0.05 and skewness > .70:
 			x[column] = np.log(x[column] + 1)
 		x[column + 'Square'] = x[column]**2
 		x[column + 'Cubic'] = x[column]**3
